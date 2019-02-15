@@ -13,7 +13,7 @@ public class AlertBox {
 	private static void display(String title, String msg) {
 		Stage window = new Stage();
 		
-		window.initModality(Modality.APPLICATION_MODAL); //blocks user events with other windows until this one is taken care of
+		window.initModality(Modality.APPLICATION_MODAL); // blocks user events with other windows until this one is taken care of
 		window.setTitle(title);
 		window.setMinWidth(250);
 		

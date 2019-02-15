@@ -1,8 +1,14 @@
-import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.Writer;
+import java.io.IOException;
+
 import org.json.*;
+
 
 public class Options {
 
+	//restraints
 	private static final int nameMaxLength = 64;
 	private static final int locationMaxLength = 256;
 	private static final int maxBurstCount = 10;
@@ -39,48 +45,69 @@ public class Options {
 	 * 
 	 * @param f JSON formatted file
 	 */
-	public Options(File f) {
+	public Options(String fp) throws IOException, JSONException{
 
-		readJSON(f);
+			readJSON(fp);
 
 	}
 
 	/*
-	 * sets global variables to values read from JSON file specified
+	 * sets global variables to values read from the file specified
 	 * 
 	 * @param file JSON formatted file to be read
 	 */
-	private void readJSON( File file ) {
+	private void readJSON( String fp ) 
+			throws IOException, JSONException {
 
-		JSONObject j = new JSONObject();
-		setName(j.getString("Name"));
 		
+		// for now, just set filepath here for testing
+		fp = "H:\\SCHOOLWORK\\SeniorProject\\DesktopApp\\Senior Project Desktop App\\src\\configuration.json";
+		
+		FileReader file = new FileReader(fp);
+
+		JSONTokener tok = new JSONTokener(file);
+		JSONObject j = new JSONObject(tok);
+		
+		//read the file and set local variables
+		this.setBurstCount(j.getInt("Burst Count"));
+		this.setTimeBurst(j.getInt("Burst Time"));
+		this.setTimePowerSaver(j.getInt("Power Saver Timeout"));
+		this.setTimeTrigInt(j.getInt("Trigger Interval"));
+		this.setName(j.getString("Name"));
+		this.setLocation(j.getString("Location"));
+		
+		file.close(); //don't forget to close it!
 	}
 	
 	/*
-	 * This will take the given local parameters and write them in JSON format
+	 * This will take the given parameters and write them in JSON format
 	 * to the file specified
 	 * 
-	 * @param file File to be written to
-	 * @param n name for device
-	 * @param loc location for device
-	 * @param bCount number of photos to take
-	 * @param timeB time after burst
-	 * @param timePS time to go into power save mode
-	 * @param timeTI time after a burst until another burst is allowed
-	 * 
-	 * @return true on successful write, false on unsuccessful write
+	 * @param fp String of the filepath to the config file
 	 */
-	public boolean writeJSON(
-			File file,
-			String n,
-			String loc,
-			int bCount,
-			int timeB,
-			int timePS,
-			int timeTI) {
+	public void writeJSON( String fp ) 
+			throws IOException, JSONException {
 		
-		return true;
+		JSONObject j = new JSONObject();
+		
+		//get local variables and put them in the file with the specified key
+		j.put("Burst Count", this.getBurstCount());
+		j.put("Burst Time", this.getTimeBurst());
+		j.put("Power Saver Timeout", this.getTimePowerSaver());
+		j.put("Trigger Interval", this.getTimeTrigInt());
+		j.put("Name", this.getName());
+		j.put("Location", this.getLocation());
+
+		// for now, just set filepath here for testing
+		fp = "H:\\SCHOOLWORK\\SeniorProject\\DesktopApp\\Senior Project Desktop App\\src\\configuration.json";
+		
+		//open file with filewriter then write the JSONObject
+		Writer file = new FileWriter(fp);
+		file.write(j.toString());
+		file.flush();
+		file.close(); //don't forget to close!
+		
+		System.out.println("\nJSON Object: " + j); //print it out for testing
 		
 	}
 
