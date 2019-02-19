@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -41,6 +45,33 @@ public class tester extends Application {
 		window.setHeight(600);
 		window.show();
 		
+	}
+	
+	/*
+	 * 
+	 * 
+	 * @param csvFile String for the filepath of the csv file
+	 */
+	private void readCSV(String csvFile) {
+		
+        //String csvFile = "/Users/chadvredeveld/documents/test.csv";
+        String line = "";
+        String cvsSplitBy = ",";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] country = line.split(cvsSplitBy);
+
+                System.out.println("Country [code= " + country[4] + " , name=" + country[5] + "]");
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	
