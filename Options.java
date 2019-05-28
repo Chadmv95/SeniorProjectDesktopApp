@@ -45,9 +45,15 @@ public class Options {
 	 * 
 	 * @param f JSON formatted file
 	 */
-	public Options(String fp) throws IOException, JSONException{
+	public Options(String fp) {
 
-			readJSON(fp);
+			try{
+				readJSON(fp);
+			} catch(Exception e) {
+				System.out.print("Unable to read JSON file at location: ");
+				System.out.println(fp);
+			}
+				
 
 	}
 
@@ -56,7 +62,7 @@ public class Options {
 	 * 
 	 * @param file JSON formatted file to be read
 	 */
-	private void readJSON( String fp ) 
+	public void readJSON( String fp ) 
 			throws IOException, JSONException {
 
 		

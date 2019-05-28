@@ -20,14 +20,19 @@ import javafx.stage.Stage;
 public class tester extends Application {
 
 	private static final int BUTTON_SIZE = 50;
-
+	
+	private Scene photoScene;
+	private Scene helpScene;
+	private Scene settingsScene;
+	private Scene spreadsheetScene;
+	
 	
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
 	
-	public void start(Stage window) throws Exception {
+	public void start(Stage mainStage) throws Exception {
 		
 		VBox leftMenu = new VBox();
 
@@ -39,11 +44,11 @@ public class tester extends Application {
 		
 		borderPane.getChildren().add(leftMenu);
 		
-		window.setTitle("Window Title");
-		window.setScene(scene1);
-		window.setWidth(800);
-		window.setHeight(600);
-		window.show();
+		mainStage.setTitle("Window Title");
+		mainStage.setScene(scene1);
+		mainStage.setWidth(800);
+		mainStage.setHeight(600);
+		mainStage.show();
 		
 	}
 	
@@ -54,7 +59,6 @@ public class tester extends Application {
 	 */
 	private void readCSV(String csvFile) {
 		
-        //String csvFile = "/Users/chadvredeveld/documents/test.csv";
         String line = "";
         String cvsSplitBy = ",";
 
@@ -123,15 +127,27 @@ public class tester extends Application {
 		//make the buttons actually do something
 		btn_settings.setOnAction(e -> {
 			System.out.println("Settings");
+			AlertBox.display("Settings", "Do something now with this window!");
 		});
 		btn_photos.setOnAction(e -> {
-			System.out.println("Photos");
+			String path = "H:\\Pictures\\Concert\\adtr self help fest good quality.jpg";
+			try {
+				Runtime.getRuntime().exec("explorer.exe /select, " + path);
+			} catch (IOException e1) {
+				AlertBox.display("File Error", "Error opening: " + path);
+			}
 		});
 		btn_spreadsheet.setOnAction(e -> {
-			System.out.println("Spreadsheet");
+			String path = "H:\\SCHOOLWORK\\CIS 263\\Project 2 Stocks\\CSV.csv";
+			try {
+				Runtime.getRuntime().exec("excel " + path);
+			} catch (IOException e1) {
+				AlertBox.display("File Error", "Error opening: " + path);
+			}	
 		});
 		btn_help.setOnAction(e -> {
 			System.out.println("Help me!");
+			//window.setScene();
 		});
 		
 		//add the buttons to the vbox and format them
