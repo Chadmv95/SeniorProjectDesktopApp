@@ -48,7 +48,16 @@ public class tester extends Application {
 		mainStage.setScene(scene1);
 		mainStage.setWidth(800);
 		mainStage.setHeight(600);
+		mainStage.centerOnScreen();
+		mainStage.setResizable(false);
 		mainStage.show();
+		
+		mainStage.setScene(HelpScene.display());
+		
+		SettingsScene s = new SettingsScene();
+		
+		mainStage.setScene(s.display());
+		
 		
 	}
 	
