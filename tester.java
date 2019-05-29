@@ -21,10 +21,10 @@ public class tester extends Application {
 
 	private static final int BUTTON_SIZE = 50;
 	
-	private Scene photoScene;
-	private Scene helpScene;
-	private Scene settingsScene;
-	private Scene spreadsheetScene;
+	private PhotoScene photoScene;
+	private HelpScene helpScene;
+	private SettingsScene settingsScene;
+	private SpreadsheetScene spreadsheetScene;
 	
 	
 	public static void main(String[] args) {
@@ -35,10 +35,21 @@ public class tester extends Application {
 	public void start(Stage mainStage) throws Exception {
 		
 		VBox leftMenu = new VBox();
+		VBox centerMenu = new VBox();
 
 		BorderPane borderPane = new BorderPane();
 		borderPane.setLeft(leftMenu);
-		leftMenu = create_Sidebar();
+		borderPane.setCenter(centerMenu);
+		leftMenu = createSidebar();
+		
+		Button b1 = new Button("Penis1");
+		Button b2 = new Button("Penis2");
+		Button b3 = new Button("Penis3");
+		Button b4 = new Button("Penis4");
+		Button b5 = new Button("Penis5");
+		Button b6 = new Button("Penis6");
+				
+		centerMenu.getChildren().addAll(b1,b2,b3,b4,b5);
 		
 		Scene scene1 = new Scene(borderPane, 300, 250);
 		
@@ -52,11 +63,12 @@ public class tester extends Application {
 		mainStage.setResizable(false);
 		mainStage.show();
 		
-		mainStage.setScene(HelpScene.display());
+//		mainStage.setScene(HelpScene.display());
+//		
+//		settingsScene = new SettingsScene();
+//		
+//		mainStage.setScene(settingsScene.display());
 		
-		SettingsScene s = new SettingsScene();
-		
-		mainStage.setScene(s.display());
 		
 		
 	}
@@ -94,7 +106,7 @@ public class tester extends Application {
 	 * 
 	 * @return VBox created for side panel
 	 */
-	private VBox create_Sidebar() {
+	private VBox createSidebar() {
 		
 		//vbox for the sidebar
 		VBox vb = new VBox();
