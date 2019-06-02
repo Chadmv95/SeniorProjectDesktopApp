@@ -25,6 +25,7 @@ public class tester extends Application {
 	private HelpScene helpScene;
 	private SettingsScene settingsScene;
 	private SpreadsheetScene spreadsheetScene;
+	private BorderPane borderPane;
 	
 	
 	public static void main(String[] args) {
@@ -37,10 +38,8 @@ public class tester extends Application {
 		VBox leftMenu = new VBox();
 		VBox centerMenu = new VBox();
 
-		BorderPane borderPane = new BorderPane();
-		borderPane.setLeft(leftMenu);
-		borderPane.setCenter(centerMenu);
-		leftMenu = createSidebar();
+		borderPane = new BorderPane();
+
 		
 		Button b1 = new Button("Penis1");
 		Button b2 = new Button("Penis2");
@@ -49,11 +48,13 @@ public class tester extends Application {
 		Button b5 = new Button("Penis5");
 		Button b6 = new Button("Penis6");
 				
-		centerMenu.getChildren().addAll(b1,b2,b3,b4,b5);
+		centerMenu.getChildren().addAll(b1,b2,b3,b4,b5,b6);
+		leftMenu = createSidebar();
 		
 		Scene scene1 = new Scene(borderPane, 300, 250);
 		
-		borderPane.getChildren().add(leftMenu);
+		borderPane.setLeft(leftMenu);
+		borderPane.setCenter(centerMenu);
 		
 		mainStage.setTitle("Window Title");
 		mainStage.setScene(scene1);
@@ -139,16 +140,13 @@ public class tester extends Application {
 		
 		
 		//set the images to display on the button
-		btn_settings.setGraphic(settings_view);
-		btn_photos.setGraphic(photos_view);
 		btn_spreadsheet.setGraphic(spreadsheet_view);
+		btn_photos.setGraphic(photos_view);
+		btn_settings.setGraphic(settings_view);
 		btn_help.setGraphic(help_view);
 		
-		//TODO make these buttons able to manipulate the center borderpane
-		//make the buttons actually do something
 		btn_settings.setOnAction(e -> {
-			System.out.println("Settings");
-			AlertBox.display("Settings", "Do something now with this window!");
+			borderPane.setCenter(SettingsScene.display());
 		});
 		btn_photos.setOnAction(e -> {
 			String path = "H:\\Pictures\\Concert\\adtr self help fest good quality.jpg";
@@ -161,14 +159,14 @@ public class tester extends Application {
 		btn_spreadsheet.setOnAction(e -> {
 			String path = "H:\\SCHOOLWORK\\CIS 263\\Project 2 Stocks\\CSV.csv";
 			try {
-				Runtime.getRuntime().exec("excel " + path);
+				Runtime.getRuntime().exec("start dxdiag.exe");
 			} catch (IOException e1) {
-				AlertBox.display("File Error", "Error opening: " + path);
-			}	
+				AlertBox.display("File Error", "Error opening: " + path +
+						"\nRuntime Environment: " + Runtime.getRuntime());
+			}
 		});
 		btn_help.setOnAction(e -> {
-			System.out.println("Help me!");
-			//window.setScene();
+			borderPane.setCenter(HelpScene.display());
 		});
 		
 		//add the buttons to the vbox and format them

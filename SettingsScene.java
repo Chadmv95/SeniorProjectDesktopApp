@@ -9,15 +9,18 @@ import javafx.scene.control.*;
 
 public class SettingsScene {
 
-	Scene scene;
-	
-	VBox v;
-	Options settings;
-	Button submit;
-	ChoiceBox<Integer> choiceBurstCount, choiceTimeBurst, choiceTimePowerSaver, choiceTimeTrigInt;
-	TextField location, name;
+	static VBox v;
 	
 	public SettingsScene() {
+		display();
+	}
+	
+	public static VBox display() {
+		
+		Options settings;
+		Button submit;
+		ChoiceBox<Integer> choiceBurstCount, choiceTimeBurst, choiceTimePowerSaver, choiceTimeTrigInt;
+		TextField location, name;
 		
 		settings = new Options();
 		
@@ -32,7 +35,7 @@ public class SettingsScene {
 		
 		choiceBurstCount.getItems().addAll(1,2,3,4,5,6,7,8,9,10); //number of pictures
 		choiceTimeBurst.getItems().addAll(1,2,3,4,5,6,7,8,9,10); //seconds
-		choiceTimePowerSaver.getItems().addAll(1,10,20,30,40,50,60); //seconds
+		choiceTimePowerSaver.getItems().addAll(1*60,10*60,20*60,30*60,40*60,50*60,60*60); //seconds
 		choiceTimeTrigInt.getItems().addAll(1*60,5*60,10*60,15*60,20*60); //seconds (1min - 20min)
 		
 		submit.setOnAction(e -> {
@@ -55,13 +58,7 @@ public class SettingsScene {
 		
 		v.getChildren().addAll(name, location, choiceBurstCount, choiceTimeBurst, choiceTimePowerSaver, choiceTimeTrigInt, submit);
 		
-		scene = new Scene(v, 200, 200);
-		
-		display();
-	}
-	
-	public Scene display() {
-		return scene;
+		return v;
 	}
 	
 }
