@@ -2,7 +2,6 @@ import java.io.IOException;
 
 import org.json.JSONException;
 
-import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 

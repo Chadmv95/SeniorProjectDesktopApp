@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,12 +25,10 @@ public class tester extends Application {
 
 	private static final int BUTTON_SIZE = 50;
 	
-	private PhotoScene photoScene;
-	private HelpScene helpScene;
-	private SettingsScene settingsScene;
-	private SpreadsheetScene spreadsheetScene;
 	private BorderPane borderPane;
 	
+	private List<List<String>> records;
+	private List<MartenData> mdList;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -35,26 +37,15 @@ public class tester extends Application {
 	
 	public void start(Stage mainStage) throws Exception {
 		
+		mdList = new ArrayList<>();
+		
 		VBox leftMenu = new VBox();
-		VBox centerMenu = new VBox();
+		leftMenu = createSidebar();
 
 		borderPane = new BorderPane();
-
-		
-		Button b1 = new Button("Penis1");
-		Button b2 = new Button("Penis2");
-		Button b3 = new Button("Penis3");
-		Button b4 = new Button("Penis4");
-		Button b5 = new Button("Penis5");
-		Button b6 = new Button("Penis6");
-				
-		centerMenu.getChildren().addAll(b1,b2,b3,b4,b5,b6);
-		leftMenu = createSidebar();
-		
-		Scene scene1 = new Scene(borderPane, 300, 250);
+		Scene scene1 = new Scene(borderPane, 300, 250);	
 		
 		borderPane.setLeft(leftMenu);
-		borderPane.setCenter(centerMenu);
 		
 		mainStage.setTitle("Window Title");
 		mainStage.setScene(scene1);
@@ -75,29 +66,34 @@ public class tester extends Application {
 	}
 	
 	/*
-	 * 
+	 * TODO verify this function with a csv file
 	 * 
 	 * @param csvFile String for the filepath of the csv file
 	 */
 	private void readCSV(String csvFile) {
 		
         String line = "";
-        String cvsSplitBy = ",";
+        records = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 
             while ((line = br.readLine()) != null) {
 
-                // use comma as separator
-                String[] country = line.split(cvsSplitBy);
-
-                System.out.println("Country [code= " + country[4] + " , name=" + country[5] + "]");
-
+                String[] row = line.split(",");
+                records.add(Arrays.asList(row));
+                
+                MartenData md = new MartenData();
+                md.insertAll(row);
+                
+                mdList.add(md);
+                
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        System.out.println(records.toString());
 	}
 	
 	
@@ -128,12 +124,15 @@ public class tester extends Application {
 		ImageView settings_view = new ImageView(img_settings);
 		settings_view.setFitHeight(BUTTON_SIZE);
 		settings_view.setFitWidth(BUTTON_SIZE);
+		
 		ImageView photos_view = new ImageView(img_photos);
 		photos_view.setFitHeight(BUTTON_SIZE);
 		photos_view.setFitWidth(BUTTON_SIZE);
+		
 		ImageView spreadsheet_view = new ImageView(img_spreadsheet);
 		spreadsheet_view.setFitHeight(BUTTON_SIZE);
 		spreadsheet_view.setFitWidth(BUTTON_SIZE);
+		
 		ImageView help_view = new ImageView(img_help);
 		help_view.setFitHeight(BUTTON_SIZE);
 		help_view.setFitWidth(BUTTON_SIZE);
@@ -148,6 +147,7 @@ public class tester extends Application {
 		btn_settings.setOnAction(e -> {
 			borderPane.setCenter(SettingsScene.display());
 		});
+		
 		btn_photos.setOnAction(e -> {
 			String path = "H:\\Pictures\\Concert\\adtr self help fest good quality.jpg";
 			try {
@@ -156,15 +156,24 @@ public class tester extends Application {
 				AlertBox.display("File Error", "Error opening: " + path);
 			}
 		});
+		
 		btn_spreadsheet.setOnAction(e -> {
-			String path = "H:\\SCHOOLWORK\\CIS 263\\Project 2 Stocks\\CSV.csv";
+			
+			//TODO Make a screen to display the spreadsheet data
+			
+			String path = "H:\\SCHOOLWORK\\SeniorProject\\DesktopApp\\Senior Project Desktop App\\src\\timestamps.csv";
+			readCSV(path);
+			
 			try {
-				Runtime.getRuntime().exec("start dxdiag.exe");
+				Runtime.getRuntime().exec("excel " + path);
 			} catch (IOException e1) {
 				AlertBox.display("File Error", "Error opening: " + path +
 						"\nRuntime Environment: " + Runtime.getRuntime());
 			}
+			
+			borderPane.setCenter(SpreadsheetScene.display());
 		});
+		
 		btn_help.setOnAction(e -> {
 			borderPane.setCenter(HelpScene.display());
 		});
@@ -172,7 +181,7 @@ public class tester extends Application {
 		//add the buttons to the vbox and format them
 		vb.setSpacing(10);
 		vb.setPadding(new Insets(10, 10, 10, 10));
-		vb.getChildren().addAll(btn_settings, btn_photos, btn_spreadsheet, btn_help);
+		vb.getChildren().addAll(btn_spreadsheet, btn_photos, btn_settings, btn_help);
 		
 		return vb;
 	}
