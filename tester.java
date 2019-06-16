@@ -37,7 +37,7 @@ public class tester extends Application {
 		borderPane.setLeft(leftMenu);
 		borderPane.setCenter(SpreadsheetScene.display(""));
 		
-		mainStage.setTitle("Window Title");
+		mainStage.setTitle("PIT Tracker Configurator");
 		mainStage.setScene(scene1);
 		mainStage.setWidth(800);
 		mainStage.setHeight(600);
