@@ -4,6 +4,7 @@ import org.json.JSONException;
 
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
+import javafx.geometry.Insets;
 
 
 public class SettingsScene {
@@ -20,6 +21,7 @@ public class SettingsScene {
 		Button submit;
 		ChoiceBox<Integer> choiceBurstCount, choiceTimeBurst, choiceTimePowerSaver, choiceTimeTrigInt;
 		TextField location, name;
+		Label burstCountLabel, timeBurstLabel, timePowerSaverLabel, timeTrigIntLabel, locationLabel, nameLabel;
 		
 		settings = new Options();
 		
@@ -27,15 +29,51 @@ public class SettingsScene {
 		name = new TextField("Enter Name Here");
 		location = new TextField("Enter Location Here");
 		submit = new Button("Submit");
+		
+		burstCountLabel = new Label("Burst Count");
+		timeBurstLabel = new Label("Burst Time");
+		timePowerSaverLabel = new Label("Power Saver Time");
+		timeTrigIntLabel = new Label("Trigger Interval Time");
+		locationLabel = new Label("Location");
+		nameLabel = new Label("Device Name");
+		
 		choiceBurstCount = new ChoiceBox<>();
 		choiceTimeBurst = new ChoiceBox<>();
 		choiceTimePowerSaver = new ChoiceBox<>();
 		choiceTimeTrigInt = new ChoiceBox<>();
 		
+		//add items to the choice box. this should probably be it's own class with error handling
 		choiceBurstCount.getItems().addAll(1,2,3,4,5,6,7,8,9,10); //number of pictures
 		choiceTimeBurst.getItems().addAll(1,2,3,4,5,6,7,8,9,10); //seconds
 		choiceTimePowerSaver.getItems().addAll(1*60,10*60,20*60,30*60,40*60,50*60,60*60); //seconds
 		choiceTimeTrigInt.getItems().addAll(1*60,5*60,10*60,15*60,20*60); //seconds (1min - 20min)
+		
+		//set tool tips when the cursor is hovered over
+		choiceBurstCount.setTooltip(new Tooltip("Number of pictures to be taken"));
+		choiceTimeBurst.setTooltip(new Tooltip("Time between pictures during a burst"));
+		choiceTimePowerSaver.setTooltip(new Tooltip("Amount of time before going to low power mode"));
+		choiceTimeTrigInt.setTooltip(new Tooltip("Amount of time to wait before allowing the system to be triggered"));
+		submit.setTooltip(new Tooltip("Apply and save selected settings"));
+		
+		//set default values
+		choiceBurstCount.setValue(1);
+		choiceTimeBurst.setValue(3);
+		choiceTimePowerSaver.setValue(1*60);
+		choiceTimeTrigInt.setValue(5*60);
+		
+		//make the text fields larger and the submit button larger
+		location.setPadding(new Insets(10, 10, 10, 10));
+		name.setPadding(new Insets(10, 10, 10, 10));
+		burstCountLabel.setPadding(new Insets		(5, 0, 0, 0));
+		timeBurstLabel.setPadding(new Insets		(5, 0, 0, 0));
+		timePowerSaverLabel.setPadding(new Insets	(5, 0, 0, 0));
+		timeTrigIntLabel.setPadding(new Insets		(5, 0, 0, 0));
+		locationLabel.setPadding(new Insets			(5, 0, 0, 0));
+		nameLabel.setPadding(new Insets				(5, 0, 0, 0));
+		submit.setPadding(new Insets(10, 10, 10, 10));
+		
+		v.setPadding(new Insets(0, 200, 50, 10));
+	    v.setSpacing(2);
 		
 		submit.setOnAction(e -> {
 			settings.setLocation(location.getText());
@@ -55,7 +93,13 @@ public class SettingsScene {
 			
 		});
 		
-		v.getChildren().addAll(name, location, choiceBurstCount, choiceTimeBurst, choiceTimePowerSaver, choiceTimeTrigInt, submit);
+		v.getChildren().addAll(nameLabel, name, 
+				locationLabel, location,
+				burstCountLabel, choiceBurstCount,
+				timeBurstLabel, choiceTimeBurst,
+				timePowerSaverLabel, choiceTimePowerSaver,
+				timeTrigIntLabel, choiceTimeTrigInt,
+				submit);
 		
 		return v;
 	}
