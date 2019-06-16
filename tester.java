@@ -134,7 +134,7 @@ public class tester extends Application {
 		});
 		
 		btn_photos.setOnAction(e -> {
-			String path = file.toString().substring((int) (file.length()-14)) + "Photos";
+			String path = file.getParent() + "\\Photos\\";
 			try {
 				Runtime.getRuntime().exec("explorer.exe /select, " + path);
 			} catch (IOException e1) {
@@ -144,8 +144,7 @@ public class tester extends Application {
 		
 		btn_spreadsheet.setOnAction(e -> {
 			
-			//TODO get file path name from the user
-			String path = "H:\\SCHOOLWORK\\SeniorProject\\DesktopApp\\Senior Project Desktop App\\src\\timestamps.csv";
+			String path = file.toString();
 			
 			/*
 			 * This is left commented out but it can be used to open the file in excel
