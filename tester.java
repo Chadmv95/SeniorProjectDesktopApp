@@ -1,9 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -27,17 +21,12 @@ public class tester extends Application {
 	
 	private BorderPane borderPane;
 	
-	private List<List<String>> records;
-	private List<MartenData> mdList;
-	
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
 	
 	public void start(Stage mainStage) throws Exception {
-		
-		mdList = new ArrayList<>();
 		
 		VBox leftMenu = new VBox();
 		leftMenu = createSidebar();
@@ -46,6 +35,7 @@ public class tester extends Application {
 		Scene scene1 = new Scene(borderPane, 300, 250);	
 		
 		borderPane.setLeft(leftMenu);
+		borderPane.setCenter(SpreadsheetScene.display(""));
 		
 		mainStage.setTitle("Window Title");
 		mainStage.setScene(scene1);
@@ -53,47 +43,9 @@ public class tester extends Application {
 		mainStage.setHeight(600);
 		mainStage.centerOnScreen();
 		mainStage.setResizable(false);
-		mainStage.show();
-		
-//		mainStage.setScene(HelpScene.display());
-//		
-//		settingsScene = new SettingsScene();
-//		
-//		mainStage.setScene(settingsScene.display());
+		mainStage.show();		
 		
 		
-		
-	}
-	
-	/*
-	 * TODO verify this function with a csv file
-	 * 
-	 * @param csvFile String for the filepath of the csv file
-	 */
-	private void readCSV(String csvFile) {
-		
-        String line = "";
-        records = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-
-            while ((line = br.readLine()) != null) {
-
-                String[] row = line.split(",");
-                records.add(Arrays.asList(row));
-                
-                MartenData md = new MartenData();
-                md.insertAll(row);
-                
-                mdList.add(md);
-                
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        System.out.println(records.toString());
 	}
 	
 	
@@ -159,19 +111,22 @@ public class tester extends Application {
 		
 		btn_spreadsheet.setOnAction(e -> {
 			
-			//TODO Make a screen to display the spreadsheet data
-			
+			//TODO get file path name from the user
 			String path = "H:\\SCHOOLWORK\\SeniorProject\\DesktopApp\\Senior Project Desktop App\\src\\timestamps.csv";
-			readCSV(path);
 			
+			/*
+			 * This is left commented out but it can be used to open the file in excel
+			 * uncomment this block of code if this functionality is desired
+			 * 
 			try {
 				Runtime.getRuntime().exec("excel " + path);
 			} catch (IOException e1) {
 				AlertBox.display("File Error", "Error opening: " + path +
 						"\nRuntime Environment: " + Runtime.getRuntime());
 			}
+			*/
 			
-			borderPane.setCenter(SpreadsheetScene.display());
+			borderPane.setCenter(SpreadsheetScene.display(path));
 		});
 		
 		btn_help.setOnAction(e -> {

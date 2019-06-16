@@ -9,12 +9,13 @@ public class SpreadsheetScene {
 
 	static VBox v;
 	static TableView<MartenData> table;
+	static ObservableList<MartenData> mdObservable;
 	
 	public SpreadsheetScene() {
-		display();
+		display("");
 	}
 	
-	public static VBox display() {
+	public static VBox display(String path) {
 		
 		TableColumn<MartenData, String> timeCol = new TableColumn<>("Timestamp");
 		timeCol.setMinWidth(250);
@@ -29,7 +30,8 @@ public class SpreadsheetScene {
 		photoCountCol.setCellValueFactory(new PropertyValueFactory<>("photoCount"));
 		
 		table = new TableView<>();
-		table.setItems(getMartenData());
+		getMartenData(path);
+		table.setItems(mdObservable);
 		table.getColumns().addAll(timeCol, tagCol, photoCountCol);
 		
 		v = new VBox();
@@ -38,24 +40,13 @@ public class SpreadsheetScene {
 		return v;
 	}
 	
-	public static ObservableList<MartenData> getMartenData() {
+	private static void getMartenData(String path) {
 		
-		ObservableList<MartenData> d = FXCollections.observableArrayList();
+		mdObservable = FXCollections.observableArrayList();
 		
-		//TODO add items to d
-		String[] row = {"1", "2", "3"};
+		mdObservable = CSVReader.readCSV(mdObservable, path);
 		
-		MartenData md = new MartenData();
-		md.insertAll(row);
-
-		d.add(md);
-		d.add(md);
-		d.add(md);
-		d.add(md);
-		d.add(md);
-		
-		return d;
-		
-	}
+	}	
+	
 	
 }
