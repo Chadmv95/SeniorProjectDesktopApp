@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.File;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -9,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 
 
 /**
@@ -20,6 +22,8 @@ public class tester extends Application {
 	private static final int BUTTON_SIZE = 50;
 	
 	private BorderPane borderPane;
+	
+	File file;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -34,8 +38,6 @@ public class tester extends Application {
 		borderPane = new BorderPane();
 		Scene scene1 = new Scene(borderPane, 300, 250);	
 		
-		borderPane.setLeft(leftMenu);
-		borderPane.setCenter(SpreadsheetScene.display(""));
 		
 		mainStage.setTitle("PIT Tracker Configurator");
 		mainStage.setScene(scene1);
@@ -43,8 +45,39 @@ public class tester extends Application {
 		mainStage.setHeight(600);
 		mainStage.centerOnScreen();
 		mainStage.setResizable(false);
-		mainStage.show();		
+		mainStage.show();
 		
+		AlertBox.display("Root Directory", "Please navigate and select the \"timestamps.csv\" file located on the SD card");
+		
+		FileChooser fc = new FileChooser();
+		fc.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+            );
+		fc.getExtensionFilters().addAll( new FileChooser.ExtensionFilter("All files", "*.*"));
+		fc.setTitle("Select timestamps.csv on SD Card");
+		
+		//continue to check for 
+		file = new File("");
+		boolean success = false;
+		while(success == false) {
+			try {
+				file = fc.showOpenDialog(mainStage);
+				success = true;
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				success = false;
+				AlertBox.display("File Error", "Error getting file, please try again.");
+			}
+		}
+		
+		borderPane.setLeft(leftMenu);
+		if(file != null) {
+			borderPane.setCenter(SpreadsheetScene.display(file.toString()));
+		} else {
+			String fp = "C:\\";
+			borderPane.setCenter(SpreadsheetScene.display(fp));
+		}
 		
 	}
 	
@@ -101,7 +134,7 @@ public class tester extends Application {
 		});
 		
 		btn_photos.setOnAction(e -> {
-			String path = "H:\\Pictures\\Concert\\adtr self help fest good quality.jpg";
+			String path = file.toString().substring((int) (file.length()-14)) + "Photos";
 			try {
 				Runtime.getRuntime().exec("explorer.exe /select, " + path);
 			} catch (IOException e1) {

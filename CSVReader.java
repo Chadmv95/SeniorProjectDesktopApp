@@ -16,32 +16,35 @@ public class CSVReader {
 	 */
 	public static ObservableList<MartenData> readCSV(ObservableList<MartenData> mdList, String csvFile) {
 		
-		if( csvFile != "" ) { //check first to see if it is a null string
+		//before opening, make sure that it is a string that we can deal with appropriately
+		if( csvFile != null)
+			if( csvFile != "")
+				if (csvFile.length() >= 4)
+					if( csvFile.substring(csvFile.length()-4, csvFile.length()).equals(".csv") ) {
+					
+				        String line = "";
+				        
+				        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+				
+				            while ((line = br.readLine()) != null) {
+				
+				                String[] row = line.split(",");             
+				                MartenData md = new MartenData();
+				                md.insertAll(row);
+				                
+				                mdList.add(md);
+				                
+				            }
+				
+				        } catch (IOException e) {
+				            e.printStackTrace();
+				            AlertBox.display("File Error", "Error opening file " + csvFile);
+				        }
+				        
+					}
 			
-	        String line = "";
-	        
-	        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-	
-	            while ((line = br.readLine()) != null) {
-	
-	                String[] row = line.split(",");	                
-	                MartenData md = new MartenData();
-	                md.insertAll(row);
-	                
-	                mdList.add(md);
-	                
-	            }
-	
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	        
-		}
         
         return mdList;
 	}
-
-    
-    
 
 }
