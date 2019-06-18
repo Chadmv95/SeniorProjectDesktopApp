@@ -44,7 +44,7 @@ public class tester extends Application {
 		mainStage.setWidth(800);
 		mainStage.setHeight(600);
 		mainStage.centerOnScreen();
-		mainStage.setResizable(false);
+		mainStage.setResizable(true);
 		mainStage.show();
 		
 		AlertBox.display("Root Directory", "Please navigate and select the \"timestamps.csv\" file located on the SD card");
@@ -54,20 +54,34 @@ public class tester extends Application {
                 new File(System.getProperty("user.home"))
             );
 		fc.getExtensionFilters().addAll( new FileChooser.ExtensionFilter("All files", "*.*"));
-		fc.setTitle("Select timestamps.csv on SD Card");
+		fc.setTitle("Select timestamps.csv on SD card");
 		
 		//continue to check for 
 		file = new File("");
 		boolean success = false;
+		int retry = 0;
+		
 		while(success == false) {
 			try {
 				file = fc.showOpenDialog(mainStage);
-				success = true;
+				
+				if( getExtension(file.toString()).equals("csv") )
+					success = true;
 			}
 			catch(Exception e) {
-				e.printStackTrace();
-				success = false;
-				AlertBox.display("File Error", "Error getting file, please try again.");
+				//e.printStackTrace();
+				retry++;
+				if(retry < 3) {
+					success = false;
+					AlertBox.display("File Error", "Error getting file, please try again."
+							+ "\n\nSelect \"timestamps.csv\" on SD card");
+				}
+				else {
+					success = true;
+					AlertBox.display("File Error", "Error getting file, data will not be displayed and program will not be operational."
+							+ "\n\nProgram now exiting...");
+					System.exit(1);
+				}
 			}
 		}
 		
@@ -130,11 +144,14 @@ public class tester extends Application {
 		btn_help.setGraphic(help_view);
 		
 		btn_settings.setOnAction(e -> {
-			borderPane.setCenter(SettingsScene.display());
+			String path = file.getParent() + "\\configuration.json";
+			System.out.println("CONFIGURATION: " + path);
+			borderPane.setCenter(SettingsScene.display(path));
 		});
 		
 		btn_photos.setOnAction(e -> {
-			String path = file.getParent() + "\\Photos\\";
+			String path = file.getParent() + "\\Photos";
+			System.out.println("PHOTOS: " + path);
 			try {
 				Runtime.getRuntime().exec("explorer.exe /select, " + path);
 			} catch (IOException e1) {
@@ -145,10 +162,11 @@ public class tester extends Application {
 		btn_spreadsheet.setOnAction(e -> {
 			
 			String path = file.toString();
-			
+			System.out.println("SPREADSHEET: " + path);
 			/*
 			 * This is left commented out but it can be used to open the file in excel
 			 * uncomment this block of code if this functionality is desired
+			 * WINDOWS ONLY
 			 * 
 			try {
 				Runtime.getRuntime().exec("excel " + path);
@@ -173,7 +191,16 @@ public class tester extends Application {
 		return vb;
 	}
 	
-	
+	private String getExtension(String fileName) {
+		String extension = "";
+
+		int i = fileName.lastIndexOf('.');
+		if (i > 0) {
+		    extension = fileName.substring(i+1);
+		}
+		
+		return extension;
+	}
 
 }
 

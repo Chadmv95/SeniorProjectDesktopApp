@@ -11,11 +11,11 @@ public class SettingsScene {
 
 	static VBox v;
 	
-	public SettingsScene() {
-		display();
+	public SettingsScene(String jsonPath) {
+		display(jsonPath);
 	}
 	
-	public static VBox display() {
+	public static VBox display(String path) {
 		
 		Options settings;
 		Button submit;
@@ -84,7 +84,7 @@ public class SettingsScene {
 			settings.setTimeTrigInt(choiceTimeTrigInt.getValue());
 			
 			try {
-				settings.writeJSON("H:\\SCHOOLWORK\\SeniorProject\\DesktopApp\\Senior Project Desktop App\\src\\configuration.json");
+				settings.writeJSON(path); //"H:\\SCHOOLWORK\\SeniorProject\\DesktopApp\\Senior Project Desktop App\\src\\configuration.json"
 			} catch (JSONException e1) {
 				AlertBox.display("JSON Error", "Error reading JSON");
 			} catch (IOException e1) {

@@ -18,7 +18,7 @@ public class AlertBox {
 		window.setMinWidth(250);
 		
 		Label label = new Label(msg);
-		Button closeBtn = new Button("Close Window");
+		Button closeBtn = new Button("Okay");
 		closeBtn.setOnAction(e -> window.close());
 		
 		VBox layout = new VBox(10);
