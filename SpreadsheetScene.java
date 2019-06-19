@@ -1,6 +1,5 @@
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
@@ -17,10 +16,6 @@ public class SpreadsheetScene {
 	}
 	
 	public static VBox display(String path) {
-		
-		ScrollPane sp = new ScrollPane();
-		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		sp.setHbarPolicy(ScrollBarPolicy.NEVER);
 		
 		TableColumn<MartenData, String> timeCol = new TableColumn<>("Timestamp");
 		timeCol.setMinWidth(250);
@@ -39,10 +34,8 @@ public class SpreadsheetScene {
 		table.setItems(mdObservable);
 		table.getColumns().addAll(timeCol, tagCol, photoCountCol);
 		
-		sp.setContent(table);
-		
 		v = new VBox();
-		v.getChildren().addAll(sp);		
+		v.getChildren().addAll(table);
 		
 		return v;
 	}

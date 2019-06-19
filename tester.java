@@ -41,10 +41,10 @@ public class tester extends Application {
 		
 		mainStage.setTitle("PIT Tracker Configurator");
 		mainStage.setScene(scene1);
-		mainStage.setWidth(800);
-		mainStage.setHeight(600);
+		mainStage.setWidth(750);
+		mainStage.setHeight(450);
 		mainStage.centerOnScreen();
-		mainStage.setResizable(true);
+		mainStage.setResizable(false);
 		mainStage.show();
 		
 		AlertBox.display("Root Directory", "Please navigate and select the \"timestamps.csv\" file located on the SD card");
