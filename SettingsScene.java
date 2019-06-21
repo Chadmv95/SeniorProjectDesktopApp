@@ -25,15 +25,15 @@ public class SettingsScene {
 		
 		settings = new Options();
 		
-		v = new VBox();	
+		v = new VBox();	 
 		name = new TextField("Enter Name Here");
 		location = new TextField("Enter Location Here");
 		submit = new Button("Submit");
 		
 		burstCountLabel = new Label("Burst Count");
-		timeBurstLabel = new Label("Burst Time");
-		timePowerSaverLabel = new Label("Power Saver Time");
-		timeTrigIntLabel = new Label("Trigger Interval Time");
+		timeBurstLabel = new Label("Burst Time (seconds)");
+		timePowerSaverLabel = new Label("Power Saver Time (seconds)");
+		timeTrigIntLabel = new Label("Trigger Interval Time (seconds)");
 		locationLabel = new Label("Location");
 		nameLabel = new Label("Device Name");
 		
