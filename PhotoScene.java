@@ -1,5 +1,4 @@
 import javafx.scene.*;
-import javafx.scene.layout.*;
 
 
 public class PhotoScene {

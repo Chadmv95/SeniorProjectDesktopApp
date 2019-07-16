@@ -2,9 +2,11 @@ import java.io.IOException;
 import java.io.File;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -93,6 +95,9 @@ public class tester extends Application {
 			borderPane.setCenter(SpreadsheetScene.display(fp));
 		}
 		
+		Options tempSettings = new Options(file.getParent() + "\\configuration.json");		
+		mainStage.setTitle("PIT TRACKER: NAME: " + tempSettings.getName() + " LOCATION: " + tempSettings.getLocation());
+		
 	}
 	
 	
@@ -118,6 +123,12 @@ public class tester extends Application {
 		Image img_photos = new Image(getClass().getResourceAsStream("photos.png"));
 		Image img_spreadsheet = new Image(getClass().getResourceAsStream("spreadsheet.png"));
 		Image img_help = new Image(getClass().getResourceAsStream("question mark.png"));
+		
+		//create tooltips for the buttons
+		btn_settings.setTooltip(new Tooltip("Settings for the device"));
+		btn_photos.setTooltip(new Tooltip("Open File Explorer to view photos"));
+		btn_spreadsheet.setTooltip(new Tooltip("View the data logged from the device while in the field"));
+		btn_help.setTooltip(new Tooltip("Get Help and useful information for using this application"));
 		
 		//create image views for each photo so we can change the size of the button
 		ImageView settings_view = new ImageView(img_settings);
@@ -166,7 +177,7 @@ public class tester extends Application {
 			/*
 			 * This is left commented out but it can be used to open the file in excel
 			 * uncomment this block of code if this functionality is desired
-			 * WINDOWS ONLY
+			 * THIS WORKS ON WINDOWS ONLY
 			 * 
 			try {
 				Runtime.getRuntime().exec("excel " + path);

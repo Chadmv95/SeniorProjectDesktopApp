@@ -23,11 +23,11 @@ public class SettingsScene {
 		TextField location, name;
 		Label burstCountLabel, timeBurstLabel, timePowerSaverLabel, timeTrigIntLabel, locationLabel, nameLabel;
 		
-		settings = new Options();
+		settings = new Options(path);
 		
-		v = new VBox();	 
-		name = new TextField("Enter Name Here");
-		location = new TextField("Enter Location Here");
+		v = new VBox();
+		name = new TextField(settings.getName());
+		location = new TextField(settings.getLocation());
 		submit = new Button("Submit");
 		
 		burstCountLabel = new Label("Burst Count");
@@ -56,10 +56,10 @@ public class SettingsScene {
 		submit.setTooltip(new Tooltip("Apply and save selected settings"));
 		
 		//set default values
-		choiceBurstCount.setValue(1);
-		choiceTimeBurst.setValue(3);
-		choiceTimePowerSaver.setValue(1*60);
-		choiceTimeTrigInt.setValue(5*60);
+		choiceBurstCount.setValue(settings.getBurstCount());
+		choiceTimeBurst.setValue(settings.getTimeBurst());
+		choiceTimePowerSaver.setValue(settings.getTimePowerSaver());
+		choiceTimeTrigInt.setValue(settings.getTimeTrigInt());
 		
 		//make the text fields larger and the submit button larger
 		location.setPadding(new Insets(10, 10, 10, 10));
@@ -86,9 +86,9 @@ public class SettingsScene {
 			try {
 				settings.writeJSON(path); //"H:\\SCHOOLWORK\\SeniorProject\\DesktopApp\\Senior Project Desktop App\\src\\configuration.json"
 			} catch (JSONException e1) {
-				AlertBox.display("JSON Error", "Error reading JSON");
+				AlertBox.display("JSON Error", "Error reading JSON file: \n" + path);
 			} catch (IOException e1) {
-				AlertBox.display("File Error", "Error reading file");
+				AlertBox.display("File Error", "Error reading file. Does the file configuration.json exist in this location?\n" + path);
 			}
 			
 		});

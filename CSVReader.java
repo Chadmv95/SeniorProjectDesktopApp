@@ -30,8 +30,10 @@ public class CSVReader {
 				
 				                String[] row = line.split(",");             
 				                MartenData md = new MartenData();
-				                md.insertAll(row);
-				                
+				                System.out.println(row[0] + row[1] + row[2]);
+				                if(!row[0].equals("\n"))
+				                	md.insertAll(row);
+
 				                mdList.add(md);
 				                
 				            }
