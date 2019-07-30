@@ -66,9 +66,6 @@ public class Options {
 			throws IOException, JSONException {
 
 		
-		// for now, just set filepath here for testing
-		fp = "H:\\SCHOOLWORK\\SeniorProject\\DesktopApp\\Senior Project Desktop App\\src\\configuration.json";
-		
 		FileReader file = new FileReader(fp);
 
 		JSONTokener tok = new JSONTokener(file);
@@ -103,9 +100,6 @@ public class Options {
 		j.put("Trigger Interval", this.getTimeTrigInt());
 		j.put("Name", this.getName());
 		j.put("Location", this.getLocation());
-
-		// for now, just set filepath here for testing
-		fp = "H:\\SCHOOLWORK\\SeniorProject\\DesktopApp\\Senior Project Desktop App\\src\\configuration.json";
 		
 		//open file with filewriter then write the JSONObject
 		Writer file = new FileWriter(fp);
@@ -188,9 +182,9 @@ public class Options {
 
 
 	public void setTimeTrigInt(int timeTrigInt) {
-		if(timeTrigInt > maxTimeTrigInt || timeTrigInt < 60)
+		if(timeTrigInt > maxTimeTrigInt || timeTrigInt < 5)
 			new AlertBox("Trigger interval out of bounds",
-					"Trigger interval must be between 60 seconds and " + maxTimeTrigInt);
+					"Trigger interval must be between 5 seconds and " + maxTimeTrigInt);
 		else this.timeTrigInt = timeTrigInt;
 	}
 

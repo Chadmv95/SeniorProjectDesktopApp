@@ -23,7 +23,7 @@ public class SpreadsheetScene {
 	@SuppressWarnings("unchecked")
 	public static VBox display(String path) {
 		
-		TableColumn<MartenData, String> timeCol = new TableColumn<>("Timestamp");
+		TableColumn<MartenData, String> timeCol = new TableColumn<>("Timestamp [yyyy_mm_dd_hh_mm_ss]");
 		timeCol.setMinWidth(250);
 		timeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
 		
@@ -51,7 +51,7 @@ public class SpreadsheetScene {
 					
 					//trim the file off the directory, then add \photos\'timestamp'
 					String tempPath = path.substring(0, path.lastIndexOf("\\")) + "\\Photos\\" + md.getTime();
-					System.out.println(tempPath + "\\Photos\\" + md.getTime());
+					//System.out.println(tempPath + "\\Photos\\" + md.getTime());
 					try {
 						Runtime.getRuntime().exec("explorer.exe /select, " + tempPath);
 					} catch (IOException e1) {

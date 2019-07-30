@@ -46,7 +46,7 @@ public class SettingsScene {
 		choiceBurstCount.getItems().addAll(1,2,3,4,5,6,7,8,9,10); //number of pictures
 		choiceTimeBurst.getItems().addAll(1,2,3,4,5,6,7,8,9,10); //seconds
 		choiceTimePowerSaver.getItems().addAll(1*60,10*60,20*60,30*60,40*60,50*60,60*60); //seconds
-		choiceTimeTrigInt.getItems().addAll(1*60,5*60,10*60,15*60,20*60); //seconds (1min - 20min)
+		choiceTimeTrigInt.getItems().addAll(5,15,30,1*60,5*60,10*60,15*60,20*60); //seconds (5sec - 20min)
 		
 		//set tool tips when the cursor is hovered over
 		choiceBurstCount.setTooltip(new Tooltip("Number of pictures to be taken"));
